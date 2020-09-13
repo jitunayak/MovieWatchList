@@ -10,10 +10,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
+  AsyncStorage,
 } from "react-native";
 import { or } from "react-native-reanimated";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   // useEffect(() => {
   //   fetch("https://randomuser.me/api/")
   //     .then((results) => results.json())
@@ -22,7 +23,6 @@ export default function LoginScreen() {
   //       alert(data.results[0].email);
   //     });
   // }, [])};
-
   const [wait, setWait] = useState(false);
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +39,12 @@ export default function LoginScreen() {
       axios
         .post(`http://localhost:8080/login`, body)
         .then((res) => {
-          alert(res.data);
+          if (res.data == "login successful") {
+            AsyncStorage.setItem("LOGIN_TOKEN", "abc@123");
+            navigation.navigate("Home");
+          } else {
+            alert(res.data);
+          }
         })
         .catch((err) => {
           alert(err.message);
@@ -52,7 +57,7 @@ export default function LoginScreen() {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.loginView}>
-          <Text style={styles.title}>LOGIN</Text>
+          <Text style={styles.title}>MOVIE</Text>
           <Text></Text>
 
           <TextInput
@@ -80,7 +85,12 @@ export default function LoginScreen() {
 
           <View>
             <TouchableOpacity>
-              <Text style={styles.fontMBlack}>
+              <Text
+                style={styles.fontMBlack}
+                onPress={() => {
+                  navigation.navigate("Registration");
+                }}
+              >
                 Don't have an account, Register
               </Text>
             </TouchableOpacity>
@@ -100,6 +110,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   loginView: {
     width: "100%",
+    height: "100%",
     marginTop: 100,
     alignItems: "center",
     justifyContent: "center",
@@ -119,6 +130,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     width: "100%",
+    height: "100%",
     padding: 0,
   },
   title: {
@@ -133,7 +145,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: "#00A7D9",
     color: "white",
-    width: "100%",
+    width: 350,
     fontSize: 20,
     borderRadius: 10,
     display: "flex",

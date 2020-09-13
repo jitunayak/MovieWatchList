@@ -10,6 +10,7 @@ import {
   SearchBar,
   Image,
   Alert,
+  AsyncStorage,
 } from "react-native";
 import {
   ScrollView,
@@ -18,7 +19,7 @@ import {
 } from "react-native-gesture-handler";
 import axios from "axios";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [searchInput, SetSearchInput] = useState([
     {
       value: "",
@@ -38,6 +39,12 @@ export default function HomeScreen() {
   ]);
 
   useEffect(() => {
+    AsyncStorage.getItem("LOGIN_TOKEN").then((token) => {
+      if (token != "abc@123") {
+        navigation.navigate("Login");
+      }
+    });
+
     const body = { q: searchInput.value, limit: 4 };
     axios
       .post(`http://localhost:7700/indexes/movies/search`, body)
@@ -60,26 +67,36 @@ export default function HomeScreen() {
           style={{ marginLeft: 10 }}
           color="grey"
         />
+
         <TextInput
           style={{
             fontSize: 22,
             marginLeft: 10,
             paddingLeft: 10,
-            width: "100%",
+            width: "80%",
           }}
           autoFocus={false}
           placeholder="Search"
           value={searchInput.value}
           onChangeText={(text) => SetSearchInput({ value: text })}
         ></TextInput>
+        <Ionicons
+          name="md-close"
+          size={32}
+          style={{ marginRight: 10 }}
+          color="grey"
+          onPress={() => {
+            SetSearchInput({ value: "" });
+          }}
+        />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <Text
           style={{
             fontWeight: "400",
-            fontSize: 30,
-            marginBottom: 20,
+            fontSize: 34,
+            marginBottom: 8,
             marginLeft: 10,
           }}
         >
@@ -121,6 +138,7 @@ export default function HomeScreen() {
                     if (index < 3) {
                       return (
                         <Text
+                          key={index}
                           style={{
                             color: "red",
                             display: "flex",
@@ -166,16 +184,16 @@ const styles = StyleSheet.create({
   searchBar: {
     padding: 8,
     fontSize: 18,
-    marginTop: 10,
+    marginTop: 0,
     backgroundColor: "#F6F6F6",
     marginBottom: 10,
-    borderRadius: 20,
+    borderRadius: 16,
     display: "flex",
     flexDirection: "row",
   },
   MainBackgorund: {
     backgroundColor: "white",
-    padding: 20,
+    padding: 8,
   },
 
   roundedCard: {
