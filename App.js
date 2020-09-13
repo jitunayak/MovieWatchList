@@ -5,11 +5,10 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 
-// import { NavigationContainer } from "@react-navigation/native";
-// import { createStackNavigator } from "@react-navigation/stack";
-
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 export default function App() {
-  // const AppNavigation = createStackNavigation(
+  // const AppNavigation = createStackNavigatior(
   //   {
   //     LoginScreen: LoginScreen,
   //     RegisterScreen: RegisterScreen,
@@ -19,14 +18,15 @@ export default function App() {
   //     initialRouteName: "LoginScreen",
   //   }
   // );
+  const Stack = createStackNavigator();
 
   //const AppContainer = createAppContainer(AppNavigation);
   return (
     <View style={styles.container}>
-      {/* <NavigationContainer>
+      <NavigationContainer>
         <Stack.Screen name="Login" component={LoginScreen} />
-      </NavigationContainer> */}
-      <LoginScreen />
+      </NavigationContainer>
+      {/* <LoginScreen /> */}
     </View>
   );
 }
