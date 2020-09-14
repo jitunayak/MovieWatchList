@@ -18,6 +18,7 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import axios from "axios";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function HomeScreen({ navigation }) {
   const [searchInput, SetSearchInput] = useState([
@@ -44,7 +45,6 @@ export default function HomeScreen({ navigation }) {
         navigation.navigate("Login");
       }
     });
-
     const body = { q: searchInput.value, limit: 4 };
     axios
       .post(`http://localhost:7700/indexes/movies/search`, body)
@@ -60,49 +60,65 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.MainBackgorund}>
-      <View style={styles.searchBar}>
-        <Ionicons
-          name="md-search"
-          size={32}
-          style={{ marginLeft: 10 }}
-          color="grey"
-        />
-
-        <TextInput
-          style={{
-            fontSize: 22,
-            marginLeft: 10,
-            paddingLeft: 10,
-            width: "80%",
-          }}
-          autoFocus={false}
-          placeholder="Search"
-          value={searchInput.value}
-          onChangeText={(text) => SetSearchInput({ value: text })}
-        ></TextInput>
-        <Ionicons
-          name="md-close"
-          size={32}
-          style={{ marginRight: 10 }}
-          color="grey"
-          onPress={() => {
-            SetSearchInput({ value: "" });
-          }}
-        />
-      </View>
-
       <ScrollView showsVerticalScrollIndicator={false}>
+        <LinearGradient
+          // Background Linear Gradient
+          colors={["white", "pink", "orange", "green", "pink", "pink"]}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height: 1600,
+          }}
+        ></LinearGradient>
         <Text
           style={{
-            fontWeight: "400",
-            fontSize: 34,
+            fontWeight: "600",
+            fontSize: 30,
             marginBottom: 8,
             marginLeft: 10,
+            padding: 20,
+            color: "#2D4CAA",
           }}
         >
-          Movies World
+          Find and Put in, Movie Watch List...
         </Text>
-        <ScrollView
+
+        <View style={styles.searchBar}>
+          <Ionicons
+            name="md-search"
+            size={24}
+            style={{ margin: 10 }}
+            color="white"
+          />
+
+          <TextInput
+            style={{
+              color: "white",
+              fontSize: 18,
+              marginLeft: 10,
+              paddingLeft: 10,
+              width: "80%",
+              fontWeight: "600",
+            }}
+            autoFocus={false}
+            placeholder="Search movies..."
+            placeholderTextColor="#8cb9ff"
+            value={searchInput.value}
+            onChangeText={(text) => SetSearchInput({ value: text })}
+          ></TextInput>
+          <Ionicons
+            name="md-close"
+            size={24}
+            style={{ margin: 10 }}
+            color="grey"
+            onPress={() => {
+              SetSearchInput({ value: "" });
+            }}
+          />
+        </View>
+        {/* <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled={true}
@@ -119,12 +135,15 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.roundedCard}>
             <Ionicons name="md-person" size={40} color="#00A7D9" />
           </View>
-        </ScrollView>
+        </ScrollView> */}
 
         {result.map((movie, index = movie.id) => {
           return (
-            <TouchableOpacity onPress={() => onPressCard(movie.id)}>
-              <View style={styles.roundedCardVertical} key={index}>
+            <TouchableOpacity
+              onPress={() => onPressCard(movie.id)}
+              key={movie.id}
+            >
+              <View style={styles.roundedCardVertical} key={movie.id}>
                 <Text style={styles.title}>{movie.title}</Text>
                 <Image
                   style={styles.tinyLogo}
@@ -182,10 +201,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   searchBar: {
-    padding: 8,
+    padding: 16,
     fontSize: 18,
-    marginTop: 0,
-    backgroundColor: "#F6F6F6",
+    marginLeft: 16,
+    marginRight: 16,
+    backgroundColor: "#2D4CAA",
     marginBottom: 10,
     borderRadius: 16,
     display: "flex",
@@ -193,7 +213,8 @@ const styles = StyleSheet.create({
   },
   MainBackgorund: {
     backgroundColor: "white",
-    padding: 8,
+    padding: 0,
+    marginTop: 30,
   },
 
   roundedCard: {
@@ -215,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "96%",
     minHeight: 220,
-    margin: 5,
+    margin: 8,
     padding: 20,
     borderRadius: 10,
     shadowColor: "#000",

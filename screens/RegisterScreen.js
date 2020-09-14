@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import axios from "axios";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function RegisterScreen() {
   const [wait, setWait] = useState(false);
@@ -22,7 +23,7 @@ export default function RegisterScreen() {
   const VerifyLogin = () => {
     setWait(true);
     try {
-      body = {
+      let body = {
         userName: userName,
         passWord: passWord,
         emailAddress: emailAddress,
@@ -40,65 +41,76 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.loginView}>
-          <Text style={styles.title}>Register</Text>
-          <Text
-            style={styles.fontMBlack}
-            style={{ marginBottom: 16, fontSize: 18 }}
-          >
-            Sign up to receive the latest updates, directly from our company
-          </Text>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={["white", "pink", "white", "#0869c9"]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: 950,
+        }}
+      >
+        <ScrollView showsVerticalScrollIndicator={false} pagingEnabled={true}>
+          <View style={styles.loginView}>
+            <Text style={styles.title}>Account Setup</Text>
+            <Text style={styles.fontMBlack}>
+              Sign up to receive the latest updates, directly from our company
+            </Text>
 
-          <View style={styles.row}>
+            <View style={styles.row}>
+              <TextInput
+                placeholderTextColor="gray"
+                secureTextEntry={false}
+                style={styles.input}
+                placeholder="First Name"
+                value={userName}
+                onChangeText={(userName) => setUserName(userName)}
+              ></TextInput>
+              <TextInput
+                placeholderTextColor="gray"
+                secureTextEntry={false}
+                style={styles.input}
+                placeholder="Last Name"
+              ></TextInput>
+            </View>
+
             <TextInput
+              placeholderTextColor="gray"
               secureTextEntry={false}
               style={styles.input}
-              placeholder="First Name"
-              value={userName}
-              onChangeText={(userName) => setUserName(userName)}
+              autoCompleteType="email"
+              placeholder="Email address"
+              value={emailAddress}
+              onChangeText={(email) => setEmailAddress(email)}
+              autoCapitalize="none"
             ></TextInput>
             <TextInput
-              secureTextEntry={false}
+              placeholderTextColor="gray"
+              secureTextEntry={true}
               style={styles.input}
-              placeholder="Last Name"
+              value={passWord}
+              onChangeText={(password) => setPassWord(password)}
+              placeholder="Password"
             ></TextInput>
-          </View>
 
-          <TextInput
-            secureTextEntry={false}
-            style={styles.input}
-            autoCompleteType="email"
-            placeholder="Email address"
-            value={emailAddress}
-            onChangeText={(email) => setEmailAddress(email)}
-            autoCapitalize="none"
-          ></TextInput>
-          <TextInput
-            secureTextEntry={true}
-            style={styles.input}
-            value={passWord}
-            onChangeText={(password) => setPassWord(password)}
-            placeholder="Password"
-          ></TextInput>
-
-          <View style={styles.button}>
-            <TouchableOpacity onPress={VerifyLogin}>
+            <TouchableOpacity style={styles.button} onPress={VerifyLogin}>
               <Text style={styles.fontMWhite}>Register</Text>
             </TouchableOpacity>
-          </View>
 
-          {wait ? (
-            <ActivityIndicator
-              style={{ margin: 20 }}
-              size="large"
-            ></ActivityIndicator>
-          ) : (
-            <View></View>
-          )}
-          <Text style={{ marginTop: 30 }}>2020 | Jitu Nayak</Text>
-        </View>
-      </ScrollView>
+            {wait ? (
+              <ActivityIndicator
+                style={{ margin: 20 }}
+                size="large"
+              ></ActivityIndicator>
+            ) : (
+              <View></View>
+            )}
+            <Text style={{ marginTop: 30 }}>2020 | Jitu Nayak</Text>
+          </View>
+        </ScrollView>
+      </LinearGradient>
     </View>
   );
 }
@@ -106,7 +118,8 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
   loginView: {
     width: "100%",
-    marginTop: 100,
+    marginTop: 10,
+    padding: 30,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
@@ -121,40 +134,45 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "black",
     margin: 8,
+    fontWeight: "500",
+    marginBottom: 16,
   },
   container: {
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    padding: 40,
+    padding: 0,
     height: "100%",
   },
   title: {
     fontSize: 35,
     padding: 5,
+    fontWeight: "600",
     marginBottom: 30,
     alignSelf: "center",
   },
   button: {
     padding: 12,
-    backgroundColor: "deepskyblue",
+    backgroundColor: "#0869c9",
     color: "white",
     width: "100%",
     marginTop: 20,
     fontSize: 20,
-    borderRadius: 10,
+    borderRadius: 5,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    elevation: 5,
   },
   input: {
     width: "100%",
     padding: 16,
-    fontSize: 18,
+    fontSize: 20,
     backgroundColor: "#F6F6F6",
     margin: 8,
-    borderRadius: 10,
+    borderRadius: 5,
     textAlign: "center",
+    elevation: 1,
   },
   row: {
     display: "flex",

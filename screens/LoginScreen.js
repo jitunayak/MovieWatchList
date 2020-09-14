@@ -11,10 +11,13 @@ import {
   ActivityIndicator,
   ScrollView,
   AsyncStorage,
+  ImageBackground,
 } from "react-native";
-import { or } from "react-native-reanimated";
+import { max, or } from "react-native-reanimated";
 
 export default function LoginScreen({ navigation }) {
+  const image = { uri: "assets/bg.png" };
+
   // useEffect(() => {
   //   fetch("https://randomuser.me/api/")
   //     .then((results) => results.json())
@@ -26,6 +29,12 @@ export default function LoginScreen({ navigation }) {
   const [wait, setWait] = useState(false);
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+
+  AsyncStorage.getItem("LOGIN_TOKEN").then((token) => {
+    if (token == "abc@123") {
+      navigation.navigate("Home");
+    }
+  });
 
   const VerifyLogin = () => {
     if (!emailAddress || !password) {
@@ -41,6 +50,7 @@ export default function LoginScreen({ navigation }) {
         .then((res) => {
           if (res.data == "login successful") {
             AsyncStorage.setItem("LOGIN_TOKEN", "abc@123");
+
             navigation.navigate("Home");
           } else {
             alert(res.data);
@@ -49,18 +59,30 @@ export default function LoginScreen({ navigation }) {
         .catch((err) => {
           alert(err.message);
         });
-      setWait(false);
     }
+    setWait(false);
   };
 
+  // try {
+  //   AsyncStorage.getItem("LOGIN_TOKEN").then((token) => {
+  //     if (token != "abc@123") {
+  //       navigation.navigate("Home");
+  //     }
+  //   });
+  // } catch (error) {}
+
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ImageBackground
+      style={{ height: "100%", justifyContent: "space-around" }}
+      source={require("../assets/bg2.png")}
+    >
       <View style={styles.container}>
         <View style={styles.loginView}>
-          <Text style={styles.title}>MOVIE</Text>
+          <Text style={styles.title}>Log in</Text>
           <Text></Text>
 
           <TextInput
+            placeholderTextColor="gray"
             secureTextEntry={false}
             style={styles.input}
             placeholder="Email Address"
@@ -71,6 +93,7 @@ export default function LoginScreen({ navigation }) {
           ></TextInput>
 
           <TextInput
+            placeholderTextColor="gray"
             secureTextEntry={true}
             style={styles.input}
             placeholder="Password"
@@ -78,7 +101,10 @@ export default function LoginScreen({ navigation }) {
           ></TextInput>
 
           <TouchableOpacity onPress={VerifyLogin} style={styles.button}>
-            <Text onPress={VerifyLogin} style={styles.fontMWhite}>
+            <Text
+              onPress={VerifyLogin}
+              style={{ fontSize: 22, fontWeight: "600", color: "white" }}
+            >
               Login
             </Text>
           </TouchableOpacity>
@@ -86,9 +112,9 @@ export default function LoginScreen({ navigation }) {
           <View>
             <TouchableOpacity>
               <Text
-                style={styles.fontMBlack}
+                style={styles.fontMWhite}
                 onPress={() => {
-                  navigation.navigate("Registration");
+                  navigation.push("Registration");
                 }}
               >
                 Don't have an account, Register
@@ -103,63 +129,72 @@ export default function LoginScreen({ navigation }) {
           )}
         </View>
       </View>
-    </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    // backgroundColor: "#fff",
+
+    padding: 2,
+  },
   loginView: {
     width: "100%",
-    height: "100%",
-    marginTop: 100,
+    height: "60%",
+    marginTop: 50,
+    padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    overflow: "hidden",
     borderRadius: 10,
   },
   fontMWhite: {
-    fontSize: 24,
-    fontWeight: "500",
-    color: "white",
-  },
-  fontMBlack: {
     fontSize: 18,
     color: "black",
-    marginTop: 16,
-  },
-  container: {
-    backgroundColor: "#fff",
-    width: "100%",
-    height: "100%",
-    padding: 0,
-  },
-  title: {
-    fontSize: 35,
-    padding: 5,
+    color: "white",
     fontWeight: "500",
-    marginBottom: 30,
+    marginTop: 10,
+  },
+  fontMBlack: {
+    fontSize: 24,
+    fontWeight: "500",
+    color: "#2D4CAA",
+  },
+
+  title: {
+    fontSize: 40,
+    padding: 5,
+    fontWeight: "700",
+    marginBottom: 20,
     alignSelf: "center",
-    color: "#00A7D9",
+    color: "white",
   },
   button: {
-    padding: 12,
-    backgroundColor: "#00A7D9",
+    padding: 8,
+    //backgroundColor: "#00A7D9",
+    backgroundColor: "#0869c9",
     color: "white",
-    width: 350,
-    fontSize: 20,
-    borderRadius: 10,
+    width: "90%",
+    height: "18%",
+    fontSize: 8,
+    borderRadius: 5,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 8,
+    elevation: 8,
   },
   input: {
-    width: 350,
+    width: "90%",
     padding: 16,
     fontSize: 20,
     backgroundColor: "#F6F6F6",
+    //backgroundColor: "white",
     marginBottom: 10,
-    borderRadius: 10,
-    textAlign: "center",
+    borderRadius: 5,
+    textAlign: "left",
+    // borderBottomColor: "#00A7D9",
+    // borderBottomWidth: 2,
+    elevation: 1,
   },
 });
