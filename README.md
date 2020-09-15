@@ -1,5 +1,7 @@
 # MovieWatchList
 
+### Check individual branch for update of their corresponding progress
+
 ![Preview](https://github.com/jitunayak/MovieWatchList/blob/master/Movie_Watch_React_Native_part_2_-Demo2y.gif)
 
 ![Preview](https://github.com/jitunayak/MovieWatchList/blob/master/Movie_Watch_React_Native_part_2_-Demo.gif)
