@@ -1,3 +1,9 @@
 # MovieWatchList
 
-![![]("https://drive.google.com/file/d/1q1ZQcI_NqWDbA7eaI9cTj7bLgte6Pjbu/view")]("https://www.youtube.com/watch?v=_5XbdAbEcAc")
+![Preview](https://github.com/jitunayak/MovieWatchList/blob/master/Movie_Watch_React_Native_part_2_-Demo.gif)
+
+```
+It requires a backend REST API Service which is built over Spring Boot. Which is not a part of this repo.
+```
+### Watch the full working video
+[![](http://img.youtube.com/vi/_5XbdAbEcAc/0.jpg)](http://www.youtube.com/watch?v=_5XbdAbEcAc "Video Demo")
