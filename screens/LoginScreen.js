@@ -72,77 +72,99 @@ export default function LoginScreen({ navigation }) {
   // } catch (error) {}
 
   return (
-    <ImageBackground
-      style={{ height: "100%", justifyContent: "space-around" }}
-      source={require("../assets/bg2.png")}
-    >
-      <View style={styles.container}>
-        <View style={styles.loginView}>
-          <Text style={styles.title}>Log in</Text>
-          <Text></Text>
+    // <ImageBackground
+    //   style={{ height: "100%", justifyContent: "space-around" }}
+    //   source={require("../assets/bg2.png")}
+    // >
+    <View style={styles.container}>
+      <View style={styles.loginView}>
+        <View style={styles.logintext}>
+          <Text style={styles.title}>Hello</Text>
+          <Text style={styles.subtitle}>Welcome Back!</Text>
+        </View>
 
-          <TextInput
-            placeholderTextColor="gray"
-            secureTextEntry={false}
-            style={styles.input}
-            placeholder="Email Address"
-            autoCapitalize="none"
-            autoCompleteType="email"
-            value={emailAddress}
-            onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-          ></TextInput>
+        <TextInput
+          placeholderTextColor="gray"
+          secureTextEntry={false}
+          style={styles.input}
+          placeholder="Email Address"
+          autoCapitalize="none"
+          autoCompleteType="email"
+          value={emailAddress}
+          onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
+        ></TextInput>
 
-          <TextInput
-            placeholderTextColor="gray"
-            secureTextEntry={true}
-            style={styles.input}
-            placeholder="Password"
-            onChangeText={(password) => setPassword(password)}
-          ></TextInput>
+        <TextInput
+          placeholderTextColor="gray"
+          secureTextEntry={true}
+          style={styles.input}
+          placeholder="Password"
+          onChangeText={(password) => setPassword(password)}
+        ></TextInput>
 
-          <TouchableOpacity onPress={VerifyLogin} style={styles.button}>
+        <TouchableOpacity onPress={VerifyLogin} style={styles.button}>
+          <Text
+            onPress={VerifyLogin}
+            style={{ fontSize: 22, fontWeight: "600", color: "white" }}
+          >
+            Login
+          </Text>
+        </TouchableOpacity>
+
+        <View>
+          <TouchableOpacity>
             <Text
-              onPress={VerifyLogin}
-              style={{ fontSize: 22, fontWeight: "600", color: "white" }}
+              style={styles.fontMWhite}
+              onPress={() => {
+                navigation.push("Registration");
+              }}
             >
-              Login
+              Don't have an account, Register
             </Text>
           </TouchableOpacity>
-
-          <View>
-            <TouchableOpacity>
-              <Text
-                style={styles.fontMWhite}
-                onPress={() => {
-                  navigation.push("Registration");
-                }}
-              >
-                Don't have an account, Register
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {wait ? (
-            <ActivityIndicator size="large"></ActivityIndicator>
-          ) : (
-            <View></View>
-          )}
         </View>
+
+        {wait ? (
+          <ActivityIndicator size="large"></ActivityIndicator>
+        ) : (
+          <View></View>
+        )}
       </View>
-    </ImageBackground>
+    </View>
+    // </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "#fff",
-
+    backgroundColor: "white",
     padding: 2,
+    justifyContent: "center",
+    height: "100%",
+  },
+
+  logintext: {
+    alignItems: "baseline",
+    marginBottom: 20,
+    justifyContent: "flex-start",
+    width: "100%",
+    padding: 20,
+  },
+  title: {
+    fontSize: 40,
+    padding: 5,
+    fontWeight: "700",
+    color: "#0d244a",
+  },
+  subtitle: {
+    fontSize: 30,
+    color: "#0d244a",
+    fontWeight: "600",
   },
   loginView: {
     width: "100%",
     height: "60%",
-    marginTop: 50,
+    marginTop: 10,
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
@@ -150,10 +172,9 @@ const styles = StyleSheet.create({
   },
   fontMWhite: {
     fontSize: 18,
-    color: "black",
-    color: "white",
+    color: "#0d244a",
     fontWeight: "500",
-    marginTop: 10,
+    marginTop: 20,
   },
   fontMBlack: {
     fontSize: 24,
@@ -161,21 +182,13 @@ const styles = StyleSheet.create({
     color: "#2D4CAA",
   },
 
-  title: {
-    fontSize: 40,
-    padding: 5,
-    fontWeight: "700",
-    marginBottom: 20,
-    alignSelf: "center",
-    color: "white",
-  },
   button: {
     padding: 8,
     //backgroundColor: "#00A7D9",
     backgroundColor: "#0869c9",
     color: "white",
     width: "90%",
-    height: "18%",
+    height: "12%",
     fontSize: 8,
     borderRadius: 5,
     display: "flex",
