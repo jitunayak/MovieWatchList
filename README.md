@@ -1,6 +1,6 @@
 # ⚛︎ Movie Watch List 🎬
 
-### Check individual branch for update of their corresponding progress
+### Check individual branches for their corresponding progress
 
 ![Preview](screenshots/Movie_Watch_React_Native_part_2_-Demo2y.gif)
 
